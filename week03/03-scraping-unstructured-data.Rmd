@@ -10,10 +10,13 @@ output: html_document
 Loading packages
 
 ```{r}
+#install.packages("DT")
+#install.packages("zoo")
 library(tidyverse)
 library(stringi)
 library(rvest)
 library(DT)
+
 ```
 
 A common scenario for web scraping is when the data we want is available in plain html, but in different parts of the web, and not in a table format. In this scenario, we will need to find a way to extract each element, and then put it together into a data frame manually.
@@ -32,10 +35,10 @@ Now we're ready to scrape the website:
 
 ```{r}
 # Reading the HTML code
-bribe_html <- ________(url)
+bribe_html <- read_html(url)
 
 # Identify the CSS selector and add it to the css argument
-bribe_nodes <- html_nodes(bribe_html, css = "___________")
+bribe_nodes <- html_nodes(bribe_html, css = ".paid-amount span")
 
 # Content of CSS selector
 bribe_nodes
@@ -45,10 +48,10 @@ We still need to do some cleaning before the data is usable:
 
 ```{r}
 # Extract the content of the CSS selector as text
-bribe_amount <- ________(bribe_nodes) %>%
+bribe_amount <- html_text(bribe_nodes) %>%
   stri_replace_first_fixed("Paid INR ", "") %>%
   stri_replace_first_regex("\\r.+", "") %>%
-  stri_replace_all_fixed(",", "") %>%
+  stri_replace_all_fixed(",", "") %>% #replace all occurences
   as.numeric
 
 bribe_amount
@@ -59,7 +62,7 @@ Small note on `stri_replace()`: `first` means to look for the first occurrence, 
 Let's do another one: transactions during which the bribe occurred:
 
 ```{r}
-transaction <- html_nodes(bribe_html, "_____________") %>% 
+transaction <- html_nodes(bribe_html, ".transaction a") %>% #see class a on the inspect console
   html_text
 
 transaction
@@ -82,20 +85,20 @@ scrape_bribe <- function(url){
   # Can you combine all previoius sections into one function?
   
   # 1. Read the html
-  c_html <- _________(url)
+  c_html <- read_html(url)
   
   # 2. Take the html and get the bribe amount
   amount <- c_html %>% 
-    html_nodes("____________") %>%
+    html_nodes(".paid-amount span") %>%
     # extract it as text
-    ___________ %>% 
+    html_text %>% 
     stri_replace_first_fixed("Paid INR ", "") %>%
     stri_replace_all_regex("\\r.+", "") %>%
     stri_replace_all_regex(",", "") %>%
     as.numeric()
   
   # 3. Take the html and get the transaction text
-  transaction <- html_nodes(c_html, "______________") %>% 
+  transaction <- html_nodes(c_html, ".transaction a") %>% 
     html_text
   
   # 4. Take the html and get the department text
@@ -103,7 +106,7 @@ scrape_bribe <- function(url){
     html_text
   
   # 5. Combine amount, transaction, and department into one dataframe
-  df <- data.frame(________, _________, _________, stringsAsFactors = FALSE)
+  df <- data.frame(bribe_amount, transaction, dept, stringsAsFactors = FALSE)
   
   return(df)
 }
@@ -120,22 +123,22 @@ data_list <- list(scrape_bribe(url))
 How should we go about the following pages? Note that the following urls had `page=x`, where `x` is 10, 20, 30... So we will create a base url and then add these additional numbers. (Note that for this exercise we will only scrape the first 5 pages.)
 
 ```{r}
-base_url <- "http://ipaidabribe.com/reports/paid?page="
-pages <- seq(0, 40, by = 10)
+base_url <- "http://ipaidabribe.com/reports/paid?page=" #base url with the argument page= for choosing pages
+pages <- seq(0, 40, by = 10) #can scrape certain pages 
 ```
 
 And now we just need to loop over pages, and use the function we created earlier to scrape the information, and add it to the list. Note that we're adding a couple of seconds between HTTP requests to avoid overloading the page, as well as a message that will informs us of the progress of the loop.
 
 ```{r}
-for (i in 2:length(pages)){
+for (i in 2:length(pages)){   #start from second element because you have already created the first one
   # informative message about progress of loop
   message(i, '/', length(pages))
   # prepare URL
   url <- paste0(base_url, pages[i])
   # scrape website
-  data_list[[i]] <- scrape_bribe(url)
+  data_list[[i]] <- scrape_bribe(url) #save it as i element of a list in the the data frame, sebset list double braket, df single
   # wait a couple of seconds between URL calls
-  Sys.sleep(2)
+  Sys.sleep(2) #stop from over burdening the server, do nothing for two seconds
 }
 ```
 

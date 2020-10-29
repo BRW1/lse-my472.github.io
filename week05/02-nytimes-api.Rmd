@@ -19,7 +19,7 @@ library("tidyverse")
 To understand how APIs work, we will take the New York Times Article Search API as an example. This API allows users to search articles by string and dates, and returns counts of articles and a short description of each article (but not the full text). You can create a new account and obtain a key [here](https://developer.nytimes.com/get-started). Afterwards, paste your key here:
 
 ```{r, eval = FALSE}
-apikey <- "yourkeyhere"
+apikey <- "T331oLoaqGxwQ7Ho3uq14U5JrOlx4oGr"
 ```
 
 The fist step is to identify the base URL of the endpoint and the parameters that we can use to query the API, for the Article Search API you can find this URL structure [here](https://developer.nytimes.com/docs/articlesearch-product/1/overview). Now we can do a first API call using the **httr** package.
@@ -43,7 +43,7 @@ We can also write it to disk as a JSON file:
 ```{r}
 file_con <- file("nyt.json")
 writeLines(content(r, "text"), con = file_con)
-close(file_con)
+close(file_con) 
 ```
 
 Or we can parse the JSON content into a corresponding R object (here a list) to learn more about its structure. We will use these corresponding R objects (mainly lists) in the following for our computations:
@@ -120,7 +120,7 @@ nyt_years_count <- function(q, yearinit, yearend) {
     
     # Message to track progress
     message(y)
-    
+     
     # Retrieve count
     counts <- c(counts, nyt_count(q = q,
                                   date1 = paste0(y, "0101"),
@@ -159,7 +159,7 @@ nyt_dates_count <- function(q, init, end, by){
   
   # Note that init and end are now date objects and we can create a sequence with them
   dates <- seq(from = init, to = end, by = by)
-  dates <- format(dates, "%Y%m%d") # changing date format to match NYT API date format
+  dates <- format(dates, "%Y%m%d") # changing date format to match NYT A  PI date format
   counts <- rep(NA, length(dates) - 1)
   
   # Loop over periods
@@ -176,7 +176,7 @@ nyt_dates_count <- function(q, init, end, by){
   # Now the function also returns a dataframe with two columns: date & count
   df <- data.frame(date = as.Date(dates[-length(dates)], format = "%Y%m%d"), count = counts)
   return(df)
-}
+} 
 ```
 
 We can combine this in a plot with dashed lines for specific dates, as the x-axis is now in a date format:

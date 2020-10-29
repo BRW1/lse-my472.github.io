@@ -115,8 +115,8 @@ length(tables_raw)
 There is only one element contained in this list, so we seem to have found the table.
 
 ```{r}
-data_pop <- html_table(tables_raw[[1]], fill=TRUE)
-str(data_pop)
+hi <- html_table(tables_raw[[1]], fill=TRUE)
+str(hi)
 ```
 
 As in the previous case, we still need to clean the data before we can use it. For this particular example, let's see if this dataset provides evidence in support of [Zipf's law for population ranks](https://en.wikipedia.org/wiki/Zipf%27s_law). Keeping only the columns of interest and transforming into a tibble:

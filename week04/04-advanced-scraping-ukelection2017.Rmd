@@ -56,10 +56,10 @@ driver$switchToFrame(2)
 
 # We need to click on "Yes, I'm happy" button:
 # 1. Use a command to locate the button on the page
-accept_button <- driver$___________(using = "xpath", 
+accept_button <- driver$findElement(using = "xpath", 
                                     value = "/html/body/div/div[3]/div[3]/div/div/button[1]")
 # 2. Click on the button:
-accept_button$_____________()
+accept_button$clickElement()
 
 # Switch back to default frame
 driver$switchToFrame(NULL)
@@ -69,36 +69,38 @@ Let's assume we want to see the results of the constituency here. We can feed po
 
 ```{r}
 # 1. identify the node for input
-search_field <- driver$findElement(using = 'class name', value = '______________')
+search_field <- driver$findElement(using = 'class name', value = 'ge-lookup__input')
 
 # 2. send the post code
-search_field$sendKeysToElement(list("WC2A 2AE"))
+search_field$sendKeysToElement(list("SE14 5TT"))
 
 # 3. this is a tricky part, we need to wait until a suggestion shows up
 while(driver$findElement(using = 'class name',                                   # get suggestions
                          value = 'ge-lookup__suggestions')$getElementText() %>% 
       nchar() == 0) {     # count number of characters and compare to 0
-  Sys.sleep(1)            # if number of characters == 0, there are no suggestions and we need
-  # print("Waiting")      # to wait -> use Sys.sleep(1)
+  Sys.sleep(1)            # if number of characters == 0, there are no suggestions
+  print("Waiting")      # to wait -> use Sys.sleep(1)
 }                         # the while() loop runs until you get some suggestions!
 
 # 4. click "Enter"
-search_field$sendKeysToElement(list(key = "______"))
+search_field$sendKeysToElement(list(key = "enter"))
 ```
 
 Now that we have the results table displayed, we will scrape the name of constituency and the table.
 
 ```{r}
 ## get the constituency name
-const_name <- driver$findElement(using = 'class name', value = '_____________')$getElementText() 
+const_name <- driver$findElement(using = 'class name', value = 'ge-result__name')$getElementText() 
+const_name
 
 ## get the div with the result information
 res_div <- driver$findElement(using = 'class name', value = 'ge-result')
-
+res_div
 ## what we can do here is identify the root node where the results are displayed
 ## and then you can hand the html from browser to 
 ## rvest and use familiar html_table() function
 ## get the html of the table, then parse it using rvest's "html_table"
+
 results_html <- read_html(res_div$getElementAttribute('innerHTML')[[1]])
 results_table <- html_table(results_html)[[1]]
 names(results_table)[c(1, 5)] <- c('tmp', 'tmp2')

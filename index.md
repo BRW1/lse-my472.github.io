@@ -211,7 +211,7 @@ How to work with Application Programming Interfaces (APIs), which offer develope
 - Interacting with the Twitter Streaming API
 
 ##### Assignment 3: APIs
-- Link to GitHub Classroom available via Moodle on Tuesday, October 27, 2pm
+- Link to GitHub Classroom available via Moodle on Tuesday, October 27
 - Deadline on Saturday, November 14, 2pm
 
 
@@ -221,44 +221,49 @@ How to work with Application Programming Interfaces (APIs), which offer develope
 
 #### 7. Textual data
 
-We will learn how to work with unstructured data in the form of text, and how to deal with format conversion, encoding problems, and serialization.  We will also cover search and replace operations using regular expressions, as well as the most common textual data types in R and Python.
+We will learn how to work with unstructured data in the form of text and discuss character encoding, search and replace with regular expressions, and elementary quantitative textual analysis.
 
 ##### Resources
-- [Lecture slides](week07/MY472-week07-text.pdf) and [as HTML](week07/MY472-week07-text.html)
-- [Regular expressions cheat sheet](week07/regular-expressions-cheat-sheet-v2.pdf)
+- [Lecture slides](week07/MY472-week07-text.pdf)
+- R examples: [Regular expressions in R](week07/01-regular-expressions-in-r.Rmd), [textual analysis in R](week07/02-textual-analysis.Rmd)
+
 
 ##### Required reading
 * Kenneth Benoit. July 16, 2019. "[Text as Data: An Overview](https://kenbenoit.net/pdfs/28%20Benoit%20Text%20as%20Data%20draft%202.pdf)" Forthcoming in Cuirini, Luigi and Robert Franzese, eds. Handbook of Research Methods in Political Science and International Relations. Thousand Oaks: Sage.
 
+
+##### Recommended reading
+- Wickham, Hadley and Garett Grolemund.  2017, [Chapter 14](http://r4ds.had.co.nz/strings.html)
+- [Regular expressions cheat sheet](week07/regular-expressions-cheat-sheet-v2.pdf)
+- [Regular expressions in R vignette](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html)
+
 ##### Lab
-- Group working with textual data
+- Regular expressions and textual analysis
 
 
 
 #### 8. Data visualisation
 
-The lecture this week will offer an overview of the principles of exploratory data analysis through (good) data visualization. In the seminars, we will practice producing our own graphs using ggplot2.
+The lecture this week will offer an overview of the principles of exploratory data analysis through (good) data visualization. In the coding session and seminars, we will practice producing our own graphs using ggplot2.
 
 ##### Resources
 - [Lecture slides](week08/MY472-week08-visualisation.pdf)
-- [Anscombe dataset plots](https://github.com/lse-my472/lse-my472.github.io/blob/master/week08/01-anscombe.md)
-- [**ggplot2** basics](https://github.com/lse-my472/lse-my472.github.io/blob/master/week08/02_ggplot2_basics.md)
-- [Scales, axes, and legends in **gplot2**](https://github.com/lse-my472/lse-my472.github.io/blob/master/week08/03_scales_axes_legends.md)
+- R examples: [Anscombe](week08/01-anscombe.Rmd), [ggplot2 examples one](week08/02-ggplot2-basics.Rmd), [ggplot2 examples two](week08/03-scales-axes-legends.Rmd)
 
 ##### Required reading
 * Wickham, Hadley and Garett Grolemund.  2017.  _R for Data Science: Import, Tidy, Transform, Visualize, and Model Data_.  Sebastopol, CA: O'Reilly.  [Data visualization](https://r4ds.had.co.nz/data-visualisation.html), [Graphics for communication](https://r4ds.had.co.nz/graphics-for-communication.html) (Ch. 1 and 22 of the print edition).
-* Hughes, A. (2015) ["Visualizing inequality: How graphical emphasis
-shapes public opinion"](https://journals.sagepub.com/doi/abs/10.1177/2053168015622073) Research and Politics.
 
 ##### Recommended reading
+* Hughes, A. (2015) ["Visualizing inequality: How graphical emphasis
+shapes public opinion"](https://journals.sagepub.com/doi/abs/10.1177/2053168015622073) Research and Politics.
 * Tufte, E. (2002) ["The visual display of quantitative information"](https://www.edwardtufte.com/tufte/books_vdqi).
 
 ##### Lab
 - Data visualization with ggplot2
 
 ##### Assignment 4: Data visualization
-- Link to GitHub Classroom available via Moodle on Monday, November 16, 2pm
-- Deadline on Friday, November 27, 2pm
+- Link to GitHub Classroom available via Moodle on Wednesday, November 18
+- Deadline on Monday, November 30, 2pm
 
 
 #### 9. Creating and managing databases
